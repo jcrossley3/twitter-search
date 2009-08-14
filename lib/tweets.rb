@@ -8,6 +8,16 @@ module TwitterSearch
       @language = opts['iso_language_code']
       VARS.each { |each| instance_variable_set "@#{each}", opts[each.to_s] }
     end
+
+ 	
+    def eql?(other)
+      self.hash == other.hash
+    end
+
+    def hash
+      @id
+    end
+
   end
 
   class Tweets < Array
