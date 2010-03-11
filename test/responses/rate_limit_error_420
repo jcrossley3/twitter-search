@@ -1,0 +1,20 @@
+HTTP/1.1 420 unused
+Date: Thu, 11 Mar 2010 22:20:16 GMT
+Server: hi
+Status: 420
+Retry-After: 361
+X-Served-From: sjc1c002
+Content-Type: application/json; charset=utf-8
+X-Served-By: sjc1i002.twitter.com
+Cache-Control: max-age=15, must-revalidate, max-age=300
+Expires: Thu, 11 Mar 2010 22:25:16 GMT
+Content-Length: 58
+X-Varnish: 1440630390
+Age: 0
+Via: 1.1 varnish
+X-Cache-Svr: sjc1i002.twitter.com
+X-Cache: MISS
+Vary: Accept-Encoding
+Connection: close
+
+{"error":"You have been rate limited. Enhance your calm."}

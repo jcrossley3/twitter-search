@@ -11,6 +11,13 @@ module TwitterSearch
   end
   class SearchServerError < RuntimeError
   end
+  class RateLimitError < SearchServerError
+    attr_reader :retry_after
+    def initialize(retry_after)
+      super "Twitter has rate limited your IP address; wait #{retry_after} seconds before retry."
+      @retry_after = retry_after.to_i
+    end
+  end
 
   class Client
     TWITTER_SEARCH_API_URL = 'http://search.twitter.com/search.json'
@@ -47,6 +54,10 @@ module TwitterSearch
       if res.code == '404'
         raise TwitterSearch::SearchServerError,
               "Twitter responded with a 404 for your query."
+      end
+
+      if res.code == '420'
+        raise TwitterSearch::RateLimitError.new(res['retry-after'])
       end
 
       json        = res.body

@@ -71,4 +71,23 @@ class SearchTest < Test::Unit::TestCase # :nodoc:
       end
     end
   end
+
+  context "response is a 420 rate limit error" do
+    setup do
+      uri = "http://search.twitter.com/search.json?q=rails"
+      FakeWeb.register_uri(:get, uri,
+        :response => File.here / 'responses' / 'rate_limit_error_420',
+        :status   => [420, "unused"])
+    end
+
+    should "raise a RateLimitError" do
+      error = assert_raise TwitterSearch::RateLimitError do
+        client = TwitterSearch::Client.new
+        client.query(:q => 'rails')
+      end
+      # The number of seconds to wait is accessible from raised exception
+      assert error.retry_after == 361
+    end
+  end
+
 end
