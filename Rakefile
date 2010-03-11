@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/testtask'
+require 'rubygems'
 
 test_files_pattern = 'test/*_test.rb'
 Rake::TestTask.new do |t|
